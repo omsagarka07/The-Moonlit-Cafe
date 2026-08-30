@@ -4,5 +4,4 @@ A simple and modern cafe website created using HTML and CSS.
 
 ## 🌐 Live Website
 
-https://omsagarka07.github.io/the-moonlit-cafe/
-
+[Visit Cafe Aurora](https://omsagarka07.github.io/the-moonlit-cafe/)
