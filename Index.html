@@ -1,226 +1,2989 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>the Moonlit Cafe</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="Styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Moonlit Cafe</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
     <style>
-        li::marker {
-            content: none;
+        /* ===== ROOT ===== */
+        :root {
+            --main-color: rgba(2, 0, 0, 0.667);
+            --btn-color: #000;
+            --bdr-color: #b2744c;
+            --border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+            --border-radius-hover: 4% 95% 6% 95% / 95% 4% 92% 5%;
+            --border: .2rem solid var(--bdr-color);
+            --border-hover: .2rem dashed var(--main-color);
+            --bg-light: #f7f5f2;
+            --brand: #b2744c;
+            --brand-dark: #8f5e3a;
+            --shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 1.5rem 4rem rgba(178, 116, 76, 0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-padding-top: 8rem;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #fff;
+            font-size: 1.6rem;
+            line-height: 1.7;
+            color: #222;
+            text-transform: capitalize;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        html::-webkit-scrollbar {
+            width: 8px;
+        }
+        html::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        html::-webkit-scrollbar-thumb {
+            background: var(--brand);
+            border-radius: 10px;
+        }
+        html::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-dark);
+        }
+
+        /* ===== UTILITY ===== */
+        .section-padding {
+            padding: 6rem 0;
+        }
+
+        @media (max-width: 991px) {
+            .section-padding {
+                padding: 4rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-padding {
+                padding: 3rem 0;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ===== HEADINGS ===== */
+        .heading {
+            font-size: 7rem;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: .08rem var(--main-color);
+            letter-spacing: .3rem;
+            text-align: center;
+            pointer-events: none;
+            position: relative;
+            margin: 0 0 3rem;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .heading span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            color: var(--main-color);
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: .1rem;
+        }
+
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 4.8rem;
+                -webkit-text-stroke: .06rem var(--main-color);
+            }
+            .heading span {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .heading {
+                font-size: 3.6rem;
+                -webkit-text-stroke: .04rem var(--main-color);
+            }
+            .heading span {
+                font-size: 1.6rem;
+            }
+        }
+
+        .section-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--main-color);
+            text-align: center;
+            margin: 4rem 0 2.5rem;
+            position: relative;
+        }
+
+        .section-title span {
+            color: var(--brand);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--brand);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 3.2rem;
+            }
+            .section-title::after {
+                width: 60px;
+            }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.8rem;
+            border: var(--border);
+            border-radius: var(--border-radius);
+            color: var(--btn-color);
+            background: transparent;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 1.6rem;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--brand);
+            transition: var(--transition);
+            z-index: -1;
+            border-radius: inherit;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            border-radius: var(--border-radius-hover);
+            border: var(--border-hover);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(178, 116, 76, 0.3);
+        }
+
+        .btn-custom {
+            background-color: var(--brand);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(178, 116, 76, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-custom:hover {
+            background-color: #fff;
+            color: var(--brand);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(178, 116, 76, 0.4);
+        }
+
+        .btn-custom i {
+            font-size: 1.4rem;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            background: var(--brand);
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.12);
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background: rgba(178, 116, 76, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(12px);
+            padding: 0.4rem 0;
+        }
+
+        #logo img {
+            border-radius: 10px;
+            height: 55px;
+            width: 180px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        #logo img:hover {
+            transform: scale(1.04);
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+            gap: 0.3rem;
+            align-items: center;
+        }
+
+        .nav-item .nav-link {
+            color: #fff;
+            padding: 0.6rem 1.4rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            white-space: nowrap;
+        }
+
+        .nav-item .nav-link i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: #fff;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .nav-item .nav-link:hover::after,
+        .nav-item .nav-link.active::after {
+            width: 60%;
+        }
+
+        .nav-item .nav-link:hover,
+        .nav-item .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .navbar-toggler {
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .navbar-toggler:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.04);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+
+        .navbar-collapse {
+            flex-grow: 0;
+        }
+
+        /* Desktop Navbar Login Button */
+        .navbar .btn-custom-login {
+            background: #fff;
+            color: var(--brand);
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-left: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .navbar .btn-custom-login:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .navbar .btn-custom-login i {
+            font-size: 1.3rem;
+        }
+
+        /* Mobile Login Button (inside collapse) */
+        .mobile-login-wrapper {
+            display: none;
+            padding: 0.8rem 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .mobile-login-wrapper .btn-custom {
+            width: 100%;
+            justify-content: center;
+            background: #fff;
+            color: var(--brand);
+            padding: 0.9rem 2rem;
+            font-size: 1.6rem;
+            border-radius: 12px;
+        }
+
+        .mobile-login-wrapper .btn-custom:hover {
+            background: #f5f5f5;
+            color: var(--brand-dark);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 991px) {
+            .navbar-nav {
+                margin-left: 0;
+                gap: 0.2rem;
+                padding: 0.8rem 0;
+                width: 100%;
+            }
+
+            .nav-item .nav-link {
+                padding: 0.8rem 1.5rem;
+                border-radius: 10px;
+                justify-content: center;
+                font-size: 1.5rem;
+            }
+
+            .nav-item .nav-link::after {
+                display: none;
+            }
+
+            .nav-item .nav-link:hover,
+            .nav-item .nav-link.active {
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            #logo img {
+                width: 140px;
+                height: 45px;
+            }
+
+            .navbar-collapse {
+                flex-grow: 1;
+            }
+
+            /* Hide desktop login, show mobile login inside collapse */
+            .navbar .btn-custom-login {
+                display: none;
+            }
+
+            .mobile-login-wrapper {
+                display: flex;
+            }
+
+            .navbar-nav .nav-item:last-child {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #logo img {
+                width: 110px;
+                height: 38px;
+            }
+
+            .navbar-toggler {
+                padding: 0.4rem 0.6rem;
+            }
+
+            .navbar-toggler-icon {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .nav-item .nav-link {
+                font-size: 1.4rem;
+                padding: 0.7rem 1.2rem;
+            }
+
+            .mobile-login-wrapper .btn-custom {
+                font-size: 1.4rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: 20px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header,
+        .modal-body,
+        .modal-footer {
+            background: var(--brand);
+            border: none;
+        }
+
+        .modal-header {
+            padding: 1.8rem 2.5rem;
+        }
+
+        .modal-header .modal-title {
+            color: #fff;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+        }
+
+        .modal-body .form-label {
+            color: #fff;
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
+
+        .modal-body .form-control {
+            border-radius: 12px;
+            border: 2px solid transparent;
+            padding: 1rem 1.5rem;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            transition: var(--transition);
+        }
+
+        .modal-body .form-control:focus {
+            border-color: #fff;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+            background: #fff;
+        }
+
+        .modal-body .form-check-label {
+            color: #fff;
+            font-size: 1.4rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2.5rem;
+        }
+
+        .modal-footer .btn-custom {
+            background: #fff;
+            color: var(--brand);
+            padding: 0.8rem 3rem;
+            font-weight: 700;
+        }
+
+        .modal-footer .btn-custom:hover {
+            background: #f0f0f0;
+            transform: scale(1.02);
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        /* ===== HOME ===== */
+        .home {
+            min-height: 100vh;
+            padding: 10rem 0 4rem;
+            background: linear-gradient(135deg, #fdfbfb 0%, #f6f0ec 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .home::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(178, 116, 76, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .home .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .home .row .content {
+            flex: 1 1 42rem;
+            text-align: center;
+        }
+
+        .home .row .content h3 {
+            font-size: 6rem;
+            color: var(--main-color);
+            text-transform: uppercase;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .home .row .content h3 .highlight {
+            color: var(--brand);
+            -webkit-text-stroke: 2px var(--brand);
+            color: transparent;
+        }
+
+        .home .row .content p {
+            font-size: 1.8rem;
+            color: #555;
+            margin: 2rem auto;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .home .row .image {
+            flex: 1 1 40rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .home .row .image img {
+            height: 38rem;
+            animation: float 5s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(178, 116, 76, 0.2));
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4rem);
+            }
+        }
+
+        .home .image-slider {
+            text-align: center;
+            padding: 3rem 0 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .home .image-slider img {
+            height: 8rem;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            transition: var(--transition);
+            padding: 0.5rem;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .home .image-slider img:hover {
+            transform: translateY(-1rem) scale(1.05);
+            border-color: var(--brand);
+            box-shadow: 0 8px 30px rgba(178, 116, 76, 0.2);
+        }
+
+        .home .image-slider img.active-slide {
+            border-color: var(--brand);
+            transform: translateY(-1rem);
+            box-shadow: 0 8px 30px rgba(178, 116, 76, 0.25);
+        }
+
+        @media (max-width: 768px) {
+            .home {
+                padding: 8rem 0 3rem;
+                min-height: auto;
+            }
+
+            .home .row .content h3 {
+                font-size: 4.2rem;
+            }
+
+            .home .row .content p {
+                font-size: 1.6rem;
+            }
+
+            .home .row .image img {
+                height: 28rem;
+            }
+
+            .home .image-slider img {
+                height: 6.5rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .home .row .content h3 {
+                font-size: 3.2rem;
+            }
+
+            .home .row .image img {
+                height: 22rem;
+            }
+
+            .home .image-slider img {
+                height: 5.5rem;
+            }
+        }
+
+        /* ===== FEATURED PRODUCTS ===== */
+        #featured-products {
+            padding: 4rem 0;
+        }
+
+        #featured-products .product-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            flex: 1 1 240px;
+            max-width: 280px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--brand), var(--brand-dark));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            border-radius: 12px;
+            height: 160px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .product-card h3 {
+            margin-top: 1.5rem;
+            font-size: 1.7rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .product-card .price {
+            color: var(--brand);
+            font-weight: 700;
+            font-size: 1.6rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonial {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2.5rem;
+            margin: 1.2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .testimonial .quote-icon {
+            font-size: 3rem;
+            color: var(--brand);
+            opacity: 0.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial h3 {
+            font-size: 1.8rem;
+            color: #333;
+            font-weight: 500;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .testimonial p {
+            font-size: 1.5rem;
+            color: #777;
+            margin-top: 0.8rem;
+            font-weight: 500;
+        }
+
+        .testimonial .stars {
+            color: #f5a623;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            background: var(--bg-light);
+        }
+
+        .about .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .about .row:last-child {
+            margin-bottom: 0;
+        }
+
+        .about .row .image {
+            flex: 1 1 38rem;
+            text-align: center;
+        }
+
+        .about .row .image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            transition: var(--transition);
+            animation: aboutImage 5s ease-in-out infinite;
+        }
+
+        @keyframes aboutImage {
+            0%,
+            100% {
+                transform: scale(0.95);
+                border-radius: var(--border-radius-hover);
+            }
+            50% {
+                transform: scale(0.88);
+                border-radius: var(--border-radius);
+            }
+        }
+
+        .about .row .content {
+            flex: 1 1 38rem;
+            text-align: center;
+        }
+
+        .about .row .content .title {
+            color: var(--main-color);
+            font-size: 3.2rem;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+
+        .about .row .content .title u {
+            text-decoration-color: var(--brand);
+            text-underline-offset: 8px;
+        }
+
+        .about .row .content p {
+            color: var(--main-color);
+            font-size: 1.6rem;
+            line-height: 1.9;
+            padding: 0.5rem 0;
+        }
+
+        .about .row .content h1 {
+            font-size: 2.2rem;
+            color: var(--brand);
+            margin-top: 1.5rem;
+            font-weight: 700;
+        }
+
+        .about .row .content h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        .about .row .content .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about .row .content .feature-list li {
+            padding: 0.8rem 0;
+            font-size: 1.6rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .about .row .content .feature-list li i {
+            color: var(--brand);
+            font-size: 2rem;
+            width: 2.8rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .about .row .content .title {
+                font-size: 2.6rem;
+            }
+
+            .about .row .content h2 {
+                font-size: 1.5rem;
+            }
+
+            .about .row .content .feature-list {
+                text-align: center;
+            }
+
+            .about .row .content .feature-list li {
+                justify-content: center;
+            }
+        }
+
+        /* ===== MENU ===== */
+        .menu {
+            background: #fff;
+        }
+
+        .menu .card {
+            height: 420px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .menu .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .menu .card img {
+            height: 200px;
+            object-fit: contain;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .menu .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .menu .card-body {
+            text-align: center;
+            padding: 1.5rem 1.5rem 2rem;
+        }
+
+        .menu .card-body .star i {
+            color: #f5a623;
+            font-size: 1.3rem;
+            margin: 0 2px;
+        }
+
+        .menu .card-body h3 {
+            color: var(--brand);
+            font-size: 2rem;
+            margin: 0.8rem 0 0.5rem;
+            font-weight: 700;
+        }
+
+        .menu .card-body p {
+            font-size: 1.6rem;
+            color: var(--brand);
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu .card-body p strike {
+            color: #aaa;
+            font-weight: 400;
+            font-size: 1.4rem;
+        }
+
+        .menu .card-body p span {
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: var(--brand);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 50%;
+            background: var(--bg-light);
+        }
+
+        .menu .card-body p span:hover {
+            background: var(--brand);
+            color: #fff;
+            transform: rotate(15deg);
+        }
+
+        @media (max-width: 576px) {
+            .menu .card {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* ===== OFFER ===== */
+        #offer {
+            background: var(--bg-light);
+        }
+
+        .banner-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+
+        .banner-container .banner {
+            position: relative;
+            height: 28rem;
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .banner-container .banner:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .banner-container .banner img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .banner-container .banner:hover img {
+            transform: scale(1.08);
+        }
+
+        .banner-container .banner .content {
+            position: absolute;
+            top: 50%;
+            left: 2.5rem;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .banner-container .banner .content span {
+            font-size: 1.6rem;
+            color: #fff;
+            font-weight: 600;
+            background: rgba(178, 116, 76, 0.85);
+            padding: 0.3rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .banner-container .banner .content h3 {
+            color: #fff;
+            padding-top: .3rem;
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .banner-container .banner .content .btn {
+            color: #fff;
+            border-color: #fff;
+            margin-top: 1.2rem;
+            font-weight: 600;
+        }
+
+        .banner-container .banner .content .btn:hover {
+            background: #fff;
+            color: var(--brand);
+        }
+
+        .banner-container .banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        .offer-header {
+            background: var(--brand);
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 16px;
+            margin: 2.5rem auto;
+            max-width: 600px;
+            box-shadow: 0 8px 30px rgba(178, 116, 76, 0.25);
+        }
+
+        .offer-header h1 {
+            font-size: 3.2rem;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .offer-header h1 i {
+            margin-right: 1rem;
+        }
+
+        .offer-card {
+            transition: var(--transition);
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: var(--shadow);
+            background: #fff;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .offer-card .card-img-top {
+            height: 220px;
+            object-fit: contain;
+            background: var(--bg-light);
+            padding: 1.5rem;
+        }
+
+        .offer-card .card-body {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .offer-card .card-body h5 {
+            font-size: 2rem;
+            color: var(--brand);
+            font-weight: 700;
+        }
+
+        .offer-card .card-body h4 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .offer-card .card-body .badge-offer {
+            display: inline-block;
+            background: #e74c3c;
+            color: #fff;
+            padding: 0.3rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .banner-container .banner {
+                height: 22rem;
+            }
+
+            .banner-container .banner .content h3 {
+                font-size: 2.2rem;
+            }
+
+            .offer-header h1 {
+                font-size: 2.4rem;
+            }
+
+            .offer-card .card-img-top {
+                height: 180px;
+            }
+        }
+
+        /* ===== PRODUCT ===== */
+        .product {
+            background: #fff;
+        }
+
+        .product .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .product .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product .card img {
+            height: 220px;
+            object-fit: contain;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .product .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product .card-body {
+            padding: 1.5rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        .product .card-body h3 {
+            color: var(--brand);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .product .card-body p {
+            font-size: 1.6rem;
+            color: var(--brand);
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product .card-body p span {
+            cursor: pointer;
+            font-size: 1.8rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 50%;
+            background: var(--bg-light);
+            color: var(--brand);
+        }
+
+        .product .card-body p span:hover {
+            background: var(--brand);
+            color: #fff;
+            transform: rotate(15deg);
+        }
+
+        @media (max-width: 576px) {
+            .product .card {
+                max-width: 100%;
+            }
+
+            .product .card img {
+                height: 180px;
+            }
+        }
+
+        /* ===== GALLARY ===== */
+        .top-cards {
+            background: var(--bg-light);
+        }
+
+        .top-cards .card {
+            border-radius: 14px;
+            transition: var(--transition);
+            cursor: pointer;
+            overflow: hidden;
+            border: none;
+            height: 200px;
+            box-shadow: var(--shadow);
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .top-cards .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            transition: var(--transition);
+        }
+
+        .top-cards .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .top-cards .card:hover img {
+            transform: scale(1.06);
+        }
+
+        @media (max-width: 768px) {
+            .top-cards .card {
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .top-cards .card {
+                height: 140px;
+            }
+        }
+
+        /* ===== REVIEW ===== */
+        .review {
+            background: #fff;
+        }
+
+        .review .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+
+        .review .box-container .box {
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            padding: 3rem 2rem;
+            background: #fff;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .review .box-container .box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(178, 116, 76, 0.08);
+        }
+
+        .review .box-container .box .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .review .box-container .box .image .user {
+            height: 9rem;
+            width: 9rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--brand);
+            padding: 0.3rem;
+            transition: var(--transition);
+        }
+
+        .review .box-container .box:hover .image .user {
+            border-color: var(--brand-dark);
+            transform: scale(1.05);
+        }
+
+        .review .box-container .box h3 {
+            padding: 1rem 0 0.2rem;
+            font-size: 2rem;
+            color: #222;
+            font-weight: 700;
+        }
+
+        .review .box-container .box h4 {
+            font-size: 1.4rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .review .box-container .box .stars {
+            margin-top: 0.8rem;
+        }
+
+        .review .box-container .box .stars i {
+            font-size: 1.6rem;
+            color: #f5a623;
+            margin: 0 2px;
+        }
+
+        .review .box-container .box .review-text {
+            font-size: 1.5rem;
+            color: #555;
+            line-height: 1.8;
+            margin-top: 1.2rem;
+            font-style: italic;
+        }
+
+        .review .box-container .box .review-text::before {
+            content: '\201C';
+            font-size: 3rem;
+            color: var(--brand);
+            opacity: 0.3;
+            margin-right: 0.5rem;
+        }
+
+        .review .box-container .box .review-text::after {
+            content: '\201D';
+            font-size: 3rem;
+            color: var(--brand);
+            opacity: 0.3;
+            margin-left: 0.5rem;
+        }
+
+        /* ===== BLOG ===== */
+        .blog {
+            background: var(--bg-light);
+        }
+
+        .blog .boxx-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+            gap: 2.5rem;
+            justify-items: center;
+        }
+
+        .blog .boxx-container .boxx {
+            border-radius: 16px;
+            background: #fff;
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .blog .boxx-container .boxx:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog .boxx-container .boxx .image {
+            height: 24rem;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog .boxx-container .boxx .image .category-tag {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: var(--brand);
+            color: #fff;
+            padding: 0.4rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(178, 116, 76, 0.3);
+        }
+
+        .blog .boxx-container .boxx .image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog .boxx-container .boxx:hover .image img {
+            transform: scale(1.08);
+        }
+
+        .blog .boxx-container .boxx .content {
+            padding: 2rem 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog .boxx-container .boxx .content .icons {
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .blog .boxx-container .boxx .content .icons a {
+            font-size: 1.3rem;
+            color: #888;
+            transition: var(--transition);
+        }
+
+        .blog .boxx-container .boxx .content .icons a:hover {
+            color: var(--brand);
+        }
+
+        .blog .boxx-container .boxx .content .icons a i {
+            color: var(--brand);
+            padding-right: .5rem;
+        }
+
+        .blog .boxx-container .boxx .content h3 {
+            font-size: 2rem;
+            color: #222;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .blog .boxx-container .boxx .content p {
+            font-size: 1.4rem;
+            color: #666;
+            line-height: 1.9;
+            flex: 1;
+        }
+
+        .blog .boxx-container .boxx .content .btn {
+            align-self: flex-start;
+            margin-top: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        @media (max-width: 576px) {
+            .blog .boxx-container .boxx .image {
+                height: 20rem;
+            }
+
+            .blog .boxx-container .boxx .content {
+                padding: 1.5rem 1.8rem;
+            }
+
+            .blog .boxx-container .boxx .content h3 {
+                font-size: 1.7rem;
+            }
+        }
+
+        /* ===== BOX CRICKET ===== */
+        #box-cricket-stadium {
+            padding: 4rem 0;
+            background: #f8f8f8;
+            text-align: center;
+        }
+
+        #box-cricket-stadium .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        #box-cricket-stadium h2 {
+            font-size: 3.2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        #box-cricket-stadium h2 span {
+            color: var(--brand);
+        }
+
+        #box-cricket-stadium p {
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stadium-gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .stadium-gallery img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stadium-gallery img:hover {
+            transform: scale(1.04);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-cricket-section {
+            padding: 4rem 0;
+            background: #fff;
+        }
+
+        .box-cricket-section h1 {
+            font-size: 2.8rem;
+            color: var(--brand);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .box-cricket-section ul {
+            list-style: none;
+            padding: 0;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .box-cricket-section ul li {
+            font-size: 1.7rem;
+            padding: 0.8rem 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            justify-content: center;
+        }
+
+        .box-cricket-section ul li i {
+            color: var(--brand);
+            font-size: 1.8rem;
+            width: 2.8rem;
+            text-align: center;
+        }
+
+        .stadium-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stadium-features .feature {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 2.5rem 2rem;
+            flex: 1 1 240px;
+            max-width: 320px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .stadium-features .feature:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+            border-color: var(--brand);
+        }
+
+        .stadium-features .feature .icon {
+            font-size: 3.5rem;
+            color: var(--brand);
+            margin-bottom: 1rem;
+        }
+
+        .stadium-features .feature h3 {
+            font-size: 2rem;
+            color: var(--brand);
+            font-weight: 700;
+        }
+
+        .stadium-features .feature p {
+            font-size: 1.5rem;
+            color: #555;
+            line-height: 1.7;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== BOOKING FORM ===== */
+        #booking-form {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            max-width: 650px;
+            margin: 2rem auto;
+            width: 100%;
+            border: 1px solid #eee;
+        }
+
+        #booking-form h2 {
+            font-size: 2.8rem;
+            color: var(--brand);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        #booking-form h2 i {
+            margin-right: 0.8rem;
+        }
+
+        #booking-form label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.4rem;
+            text-align: left;
+        }
+
+        #booking-form input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 1.2rem;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            background: #fafafa;
+        }
+
+        #booking-form input:focus {
+            border-color: var(--brand);
+            box-shadow: 0 0 0 4px rgba(178, 116, 76, 0.1);
+            background: #fff;
+            outline: none;
+        }
+
+        #booking-form button {
+            display: inline-block;
+            background: var(--brand);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(178, 116, 76, 0.25);
+        }
+
+        #booking-form button:hover {
+            background: var(--brand-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(178, 116, 76, 0.35);
+        }
+
+        #confirmation {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            max-width: 650px;
+            margin: 2rem auto;
+            text-align: center;
+            border: 2px solid var(--brand);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #confirmation::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            color: var(--brand);
+            opacity: 0.06;
+        }
+
+        #confirmation h2 {
+            color: var(--brand);
+            font-size: 2.6rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        #confirmation h2 i {
+            margin-right: 0.8rem;
+        }
+
+        #confirmation p {
+            font-size: 1.6rem;
+            color: #333;
+            margin: 0.4rem 0;
+        }
+
+        #confirmation .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: left;
+        }
+
+        #confirmation .detail-row .label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        #confirmation .detail-row .value {
+            color: #222;
+            font-weight: 500;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            background: var(--bg-light);
+        }
+
+        .contact .container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .contact .heading6 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .contact .heading6 span {
+            color: var(--brand);
+        }
+
+        .contact .sub-text {
+            font-size: 1.6rem;
+            color: #666;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .contact input.form-control {
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            font-size: 1.5rem;
+            background: #fafafa;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .contact input.form-control:focus {
+            border-color: var(--brand);
+            box-shadow: 0 0 0 4px rgba(178, 116, 76, 0.08);
+            background: #fff;
+        }
+
+        #contact-btn {
+            width: 100%;
+            max-width: 220px;
+            padding: 1rem 2.5rem;
+            border: none;
+            background: var(--brand);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.6rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(178, 116, 76, 0.2);
+            display: block;
+            margin: 0 auto;
+        }
+
+        #contact-btn:hover {
+            background: var(--brand-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(178, 116, 76, 0.3);
+        }
+
+        #col {
+            background: var(--brand);
+            padding: 2.5rem;
+            border-radius: 14px;
+            color: #fff;
+            height: 100%;
+            text-align: center;
+        }
+
+        #col h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        #col p {
+            font-size: 1.6rem;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #col p:last-child {
+            border-bottom: none;
+        }
+
+        #col p i {
+            font-size: 2rem;
+            width: 2.8rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .contact .container {
+                padding: 1.8rem;
+            }
+
+            #col {
+                margin-top: 2rem;
+            }
+
+            #contact-btn {
+                max-width: 100%;
+            }
+
+            .contact .heading6 {
+                font-size: 2.6rem;
+            }
+        }
+
+        /* ===== MAP ===== */
+        .map-container {
+            padding: 0 1.5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .map-container iframe {
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            width: 100%;
+            height: 400px;
+        }
+
+        .map-container iframe:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (max-width: 768px) {
+            .map-container iframe {
+                height: 300px;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #1a1a1a;
+            padding: 4rem 1.5rem 0;
+            color: #ccc;
+        }
+
+        .footer .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer .box-container .box {
+            text-align: center;
+        }
+
+        .footer .box-container .box h3 {
+            font-size: 2.2rem;
+            padding: 1rem 0 1.5rem;
+            color: #fff;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer .box-container .box h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--brand);
+            border-radius: 10px;
+        }
+
+        .footer .box-container .box a {
+            display: block;
+            font-size: 1.5rem;
+            padding: 0.6rem 0;
+            color: #aaa;
+            transition: var(--transition);
+        }
+
+        .footer .box-container .box a i {
+            padding-right: .8rem;
+            width: 2.4rem;
+            color: var(--brand);
+            transition: var(--transition);
+        }
+
+        .footer .box-container .box a:hover {
+            color: #fff;
+            padding-left: 0.8rem;
+        }
+
+        .footer .box-container .box a:hover i {
+            color: #fff;
+            padding-right: 1.5rem;
+        }
+
+        .footer .text-center {
+            padding: 2.5rem 0;
+            margin-top: 2.5rem;
+            font-size: 1.6rem;
+            color: #fff;
+            background: var(--brand);
+            border-radius: 0;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .footer .text-center span {
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .footer .box-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer .box-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer .text-center {
+                font-size: 1.4rem;
+                padding: 1.8rem 0;
+            }
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            width: 5rem;
+            height: 5rem;
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(178, 116, 76, 0.35);
+            transition: var(--transition);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--brand-dark);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 35px rgba(178, 116, 76, 0.45);
+        }
+
+        @media (max-width: 576px) {
+            .back-to-top {
+                width: 4.2rem;
+                height: 4.2rem;
+                font-size: 1.6rem;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+
+        /* ===== RESPONSIVE HELPERS ===== */
+        @media (max-width: 991px) {
+            html {
+                font-size: 55%;
+            }
+        }
+
+        @media (max-width: 450px) {
+            html {
+                font-size: 50%;
+            }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 2rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+
+        /* ===== ANIMATION HELPERS ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
-    
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="logo"><img src="IMG/l2.png " style="height: 60px; width: 200px;" alt=""></a>
+
+    <!-- ========================== NAVBAR ========================== -->
+    <nav class="navbar navbar-expand-lg" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="logo">
+                <img src="IMG/l2.png" alt="The Moonlit Cafe" />
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mynavbar">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link nh active" id="home" href="Index.html">
-                            <i class="fa-solid fa-house fa-beat"></i> &nbsp; Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="About.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Menu.html">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Offer.html">Offer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Product.html">Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Gallary.html">Gallary</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Review.html">Review</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Blogs.html">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Box.html">Box</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nh" href="Contect.html">Contect</a>
-                    </li>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#offer">Offer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#product">Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallary">Gallary</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#review">Review</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#blogs">Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#box">Box</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <!-- Mobile Login Button - hidden on desktop, shown inside collapse on mobile -->
+                    <li class="nav-item d-lg-none" style="display:none !important;"></li>
                 </ul>
-                <li class="nav-item">
-                    <a class="nav-link nh" href="javascript:void(0)"></a>
-                </li>
-                <li class="nav-item ">
-                    <button type="button" class="btn btn-custom active" data-bs-toggle="modal" data-bs-target="#myModal" id="clik" style="margin-top: 2px; background-color: white;">
-                        Login &nbsp; <i class="fa-solid fa-arrow-right-to-bracket fa-flip"></i>
+                <!-- Desktop Login Button (visible on lg and up) -->
+                <button type="button" class="btn-custom-login d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <i class="fa-solid fa-user"></i> Login
+                </button>
+                <!-- Mobile Login Button (visible inside collapse on small screens) -->
+                <div class="mobile-login-wrapper d-lg-none">
+                    <button type="button" class="btn-custom" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <i class="fa-solid fa-user"></i> Login
                     </button>
-                </li>
+                </div>
             </div>
         </div>
     </nav>
-    <br>
-    <!-- The Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
+
+    <!-- ========================== LOGIN MODAL ========================== -->
+    <div class="modal fade" id="myModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Login</h4>
+                    <h4 class="modal-title"><i class="fa-solid fa-lock"></i> Login</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/action_page.php">
-                        <div class="mb-3 mt-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fa-regular fa-envelope"></i> Email:</label>
+                            <input type="email" class="form-control" placeholder="Enter your email" required />
                         </div>
                         <div class="mb-3">
-                            <label for="pwd" class="form-label">Password:</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter password"
-                                name="pswd">
+                            <label class="form-label"><i class="fa-solid fa-key"></i> Password:</label>
+                            <input type="password" class="form-control" placeholder="Enter password" required />
                         </div>
                         <div class="form-check mb-3">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" name="remember"> Remember me
-                            </label>
+                            <input class="form-check-input" type="checkbox" id="rememberMe" />
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
                         </div>
+                        <p class="text-white text-end" style="font-size:1.3rem; cursor:pointer; opacity:0.7;">Forgot password?</p>
                     </form>
                 </div>
-                <!-- Modal footer -->
                 <div class="modal-footer">
-                    <br><br><br>
-                    <button type="submit" class="btn btn-custom">Submit</button>
+                    <button type="submit" class="btn btn-custom" style="background:#fff;color:var(--brand);">Sign In</button>
                 </div>
             </div>
         </div>
     </div>
-    <section class="home" id="home" style="background-color: white;">
+
+    <!-- ========================== HOME ========================== -->
+    <section class="home" id="home">
         <div class="container">
             <div class="row">
-                <div class="content">
-                    <h3 id="text">fresh coffee in the morning</h3><br><br><br>
-                     <a href="Menu.html" class="btn" id="buy">Buy Now!</a>
+                <div class="content" data-aos="fade-right" data-aos-duration="1000">
+                    <h3>fresh coffee <br /><span class="highlight">in the morning</span></h3>
+                    <p>Start your day with the perfect cup of coffee. Crafted with love and the finest beans from around the world.</p>
+                    <a href="#menu" class="btn">Explore Menu <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
-                <div class="image">
-                    <img src="IMG/main.png" class="main-home-image" id="i" alt="">
+                <div class="image" data-aos="fade-left" data-aos-duration="1000">
+                    <img src="IMG/main.png" class="main-home-image" alt="Coffee" />
                 </div>
             </div>
-            <div class="image-slider">
-                <img src="IMG/4.png" alt="">
-                <img src="IMG/5.png" alt="">
-                <img src="IMG/6.png" alt="">
+            <div class="image-slider" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <img src="IMG/4.png" alt="Coffee 1" class="active-slide" />
+                <img src="IMG/5.png" alt="Coffee 2" />
+                <img src="IMG/6.png" alt="Coffee 3" />
             </div>
         </div>
     </section>
-    <div class="container" style="background-color: white;">
+
+    <!-- ========================== FEATURED PRODUCTS ========================== -->
+    <div class="container" style="padding:3rem 0;">
         <section id="featured-products">
-            <h2 class="text-center">Featured Products</h2>
+            <h2 class="text-center" style="font-size:3.2rem; color:var(--brand); margin-bottom:0.5rem; font-weight:700;">
+                <i class="fa-solid fa-star" style="color:var(--brand);"></i> Featured Products
+            </h2>
+            <p class="text-center" style="font-size:1.6rem; color:#888; margin-bottom:2.5rem;">Our handpicked selection of premium coffee makers</p>
             <div class="product-grid">
-                <div class="product-card">
-                    <img src="IMG/fp1.png" alt="Product 1">
-                    <h3>pour-over coffee maker.</h3>
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="IMG/fp1.png" alt="Product 1" />
+                    <h3>Pour-over Coffee Maker</h3>
+                    <span class="price">$49.99</span>
                 </div>
-                <div class="product-card">
-                    <img src="IMG/fp2.png" alt="Product 2">
-                    <h3>automatic drip coffee maker</h3>
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="IMG/fp2.png" alt="Product 2" />
+                    <h3>Automatic Drip Coffee Maker</h3>
+                    <span class="price">$89.99</span>
                 </div>
-                <div class="product-card">
-                    <img src="IMG/fp3.png" alt="Product 3">
-                    <h3>BrewTech</h3>
+                <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="IMG/fp3.png" alt="Product 3" />
+                    <h3>BrewTech Pro</h3>
+                    <span class="price">$129.99</span>
                 </div>
             </div>
         </section>
-        <section id="testimonials">
-            <div class="container">
-                <h2 class="text-center">Customer Testimonials</h2>
-                <div class="testimonial">
-                    <p>
-                    <h3>"The best cafe experience I've ever had! Highly recommend!"</h3>
-                    </p>
-                    <p>- Sarah Johnson</p>
+
+        <!-- ========================== TESTIMONIALS ========================== -->
+        <section id="testimonials" style="margin-top:4rem;">
+            <h2 class="text-center" style="font-size:3.2rem; color:var(--brand); margin-bottom:0.5rem; font-weight:700;">
+                <i class="fa-solid fa-quote-left" style="color:var(--brand);"></i> Customer Testimonials
+            </h2>
+            <p class="text-center" style="font-size:1.6rem; color:#888; margin-bottom:2.5rem;">What our happy customers say about us</p>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
+                        <h3>"The best cafe experience I've ever had! Highly recommend!"</h3>
+                        <p><strong>- Sarah Johnson</strong></p>
+                    </div>
                 </div>
-                <div class="testimonial">
-                    <p>
-                    <h3>"A wonderful place to relax and enjoy great food."</h3>
-                    </p>
-                    <p>- Michael Smith</p>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
+                        <h3>"A wonderful place to relax and enjoy great food."</h3>
+                        <p><strong>- Michael Smith</strong></p>
+                    </div>
                 </div>
-                <div class="testimonial">
-                    <p>
-                    <h3>"Amazing ambiance and delicious coffee."</h3>
-                    </p>
-                    <p>- Emily Davis</p>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
+                        <h3>"Amazing ambiance and delicious coffee."</h3>
+                        <p><strong>- Emily Davis</strong></p>
+                    </div>
                 </div>
-                <br><br><br>
-                <center><a href="#" class="btn" id="buy">Read More</a></center>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#review" class="btn">Read More Reviews <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </section>
     </div>
-    <br><br>
-    <!-- FOOTER -->
-    <section class="footer">
-        <div class="box-container">
-            <div class="container-fluid p-5 text- text-center">
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div class="box">
-                                <h3 class="our"><i class="fa-solid fa-code-branch">&nbsp;</i>Our Branches</h3>
-                                <a href="#"><i class="fas fa-arrow"></i> India</a>
-                                <a href="#"><i class="fas fa-arrow"></i> USA</a>
-                                <a href="#"><i class="fas fa-arrow"></i> France</a>
-                                <a href="#"><i class="fas fa-arrow"></i> Africa</a>
-                                <a href="#"><i class="fas fa-arrow"></i> Japan</a>
-                            </div>
+
+    <!-- ========================== ABOUT ========================== -->
+    <section class="about section-padding" id="about">
+        <div class="container">
+            <h1 class="heading">about us <span>why choose us</span></h1>
+
+            <div class="row" data-aos="fade-up">
+                <div class="image"><img src="IMG/Welcome.png" alt="Welcome" /></div>
+                <div class="content">
+                    <h1 class="title"><u>Welcome to The Moonlit Cafe</u></h1>
+                    <p>Nestled in the heart of the city, The Moonlit Cafe offers a serene escape from the hustle and bustle. Our cafe is more than just a place to grab a coffee; it's a haven where you can relax, unwind, and enjoy the company of friends and family under the soft glow of moonlight.</p>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="image"><img src="IMG/story.png" alt="Story" /></div>
+                <div class="content">
+                    <h1 class="title"><u>Our Story</u></h1>
+                    <p>The Moonlit Cafe was born out of a passion for creating a space where people can gather and enjoy high-quality food and beverages in a cozy, welcoming atmosphere. Since opening our doors, we have been committed to providing an exceptional experience for our guests.</p>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="200">
+                <div class="image"><img src="IMG/mi.png" alt="Mission" /></div>
+                <div class="content">
+                    <h1 class="title"><u>Our Mission</u></h1>
+                    <p>Our mission is to create a memorable experience for every visitor by offering:</p>
+                    <ul class="feature-list">
+                        <li><i class="fa-solid fa-utensils"></i> Delicious Food and Drinks – handcrafted beverages and freshly prepared dishes</li>
+                        <li><i class="fa-solid fa-couch"></i> Comfortable Atmosphere – warm lighting and charming decor</li>
+                        <li><i class="fa-regular fa-face-smile"></i> Friendly Service – attentive and personalized service</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="300">
+                <div class="image"><img src="IMG/offer.png" alt="Offer" /></div>
+                <div class="content">
+                    <h1 class="title"><u>What We Offer</u></h1>
+                    <ul class="feature-list">
+                        <li><i class="fa-solid fa-utensils"></i> Eat – diverse menu including breakfast, lunch, dinner, and desserts</li>
+                        <li><i class="fa-solid fa-mug-saucer"></i> Drink – premium coffees, teas, smoothies, and specialty drinks</li>
+                        <li><i class="fa-solid fa-calendar-check"></i> Special Events – customized menus for private events</li>
+                        <li><i class="fa-solid fa-cricket-bat-ball"></i> Box Cricket Stadium – unique indoor cricket experience</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="400">
+                <div class="image"><img src="IMG/c1.png" alt="Quality" /></div>
+                <div class="content">
+                    <h1 class="title"><u>Our Commitment to Quality</u></h1>
+                    <p>At The Moonlit Cafe, we are dedicated to maintaining the highest standards of quality in everything we do. From sourcing local, organic ingredients to brewing the perfect cup of coffee, we strive to exceed your expectations every time you visit.</p>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="500">
+                <div class="image"><img src="IMG/joing.png" alt="Join" /></div>
+                <div class="content">
+                    <h1 class="title"><u>Join Us</u></h1>
+                    <p>Whether you're looking for a peaceful spot to read a book, a place to catch up with friends, or a venue for your next celebration, The Moonlit Cafe is here to welcome you. Come and experience the magic of our cafe.</p>
+                    <a href="#contact" class="btn">Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================== MENU ========================== -->
+    <section class="menu section-padding" id="menu">
+        <div class="container">
+            <h1 class="heading">Our Menu <span>Popular Menu</span></h1>
+
+            <div class="section-title">COFFEE <span><i class="fa-solid fa-mug-hot"></i> HOT</span></div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card"><img src="IMG/m1.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Espresso</h3><p>$99 <strike>$100</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card"><img src="IMG/m2.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Americano</h3><p>$90 <strike>$110</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card"><img src="IMG/m3.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Cappuccino</h3><p>$100 <strike>$200</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card"><img src="IMG/m4.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Latte</h3><p>$120 <strike>$150</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card"><img src="IMG/m5.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Mocha</h3><p>$200 <strike>$300</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card"><img src="IMG/m6.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Macchiato</h3><p>$30 <strike>$50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card"><img src="IMG/m7.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Flat White</h3><p>$100 <strike>$200</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card"><img src="IMG/m8.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Affogato</h3><p>$120 <strike>$150</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top:5rem;">COFFEE <span><i class="fa-regular fa-snowflake"></i> COLD</span></div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card" style="height:440px;"><img src="IMG/product-1.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Iced Latte</h3><p>$99 <strike>$100</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card" style="height:440px;"><img src="IMG/product-3.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Cold Brew</h3><p>$99 <strike>$100</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card" style="height:440px;"><img src="IMG/product-4.png" alt="" /><div class="card-body"><div class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div><h3>Frappuccino</h3><p>$99 <strike>$100</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================== OFFER ========================== -->
+    <section class="section-padding" id="offer">
+        <div class="container">
+            <h1 class="heading">Special Offer <span>Save your money</span></h1>
+
+            <div class="offer-header" data-aos="fade-up">
+                <h1><i class="fa-solid fa-tags"></i> Special Offers</h1>
+            </div>
+
+            <div class="banner-container" data-aos="fade-up" data-aos-delay="100">
+                <div class="banner"><img src="IMG/home-bg.png" alt="" /><div class="content"><span>🔥 special offer</span><h3>upto 50% off</h3><a href="#" class="btn">shop now</a></div></div>
+                <div class="banner"><img src="IMG/coffee-base.gif" alt="" /><div class="content"><span>🔥 special offer</span><h3>upto 50% off</h3><a href="#" class="btn">shop now</a></div></div>
+                <div class="banner"><img src="IMG/main.png" alt="" /><div class="content"><span>🔥 special offer</span><h3>upto 50% off</h3><a href="#" class="btn">shop now</a></div></div>
+            </div>
+
+            <div class="offer-header" style="margin-top:4rem;" data-aos="fade-up">
+                <h1><i class="fa-regular fa-calendar-star"></i> Special Day</h1>
+            </div>
+
+            <div class="row g-4 justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-md-4">
+                    <div class="card offer-card">
+                        <span class="badge-offer" style="position:absolute; top:1rem; right:1rem; z-index:2;">Limited</span>
+                        <img src="IMG/off1.png" class="card-img-top" alt="" />
+                        <div class="card-body">
+                            <h5>Buy One Get One Free</h5>
+                            <h4>Enjoy our special offer of Buy One Get One Free on all coffees every Monday.</h4>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="box">
-                                <h3><i class="fa-solid fa-link"></i>&nbsp;Quick Links</h3>
-                                <a href="Index.html"><i class="fas fa-arrow"></i> Home</a>
-                                <a href="About.html"><i class="fas fa-arrow"></i> About</a>
-                                <a href="Menu.html"><i class="fas fa-arrow"></i> Menu</a>
-                                <a href="Product.html"><i class="fas fa-arrow"></i> Prodhuct</a>
-                                <a href="Gallary.html"><i class="fas fa-arrow"></i> Gallary</a>
-                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card offer-card">
+                        <span class="badge-offer" style="position:absolute; top:1rem; right:1rem; z-index:2;">20% OFF</span>
+                        <img src="IMG/off2.png" class="card-img-top" alt="" />
+                        <div class="card-body">
+                            <h5>20% Off on Desserts</h5>
+                            <h4>Get 20% off on all desserts every Wednesday. Don't miss out on our delicious treats!</h4>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="box">
-                                <h3><i class="fa-regular fa-address-book"></i>&nbsp;Contact Info</h3>
-                                <a href="#"><i class="fa-solid fa-phone fa-shake"></i>+91-5846285485</a>
-                                <a href="#"><i class="fa-solid fa-phone fa-shake"></i> +91-7186294385</a>
-                                <a href="#"><i class="fa-solid fa-envelope fa-bounce"></i> moonlit.cafe@gmail.com</a>
-                                <a href="https://www.google.com/maps/uv?pb=!1s0x3957cb00031b8b35%3A0x9dfea6490d8aacd6!3m1!7e115!4s%2Fmaps%2Fplace%2Fthe%2Bmoonlit%2Bcafe%2Bporbandar%2F%4021.6359339%2C69.6778502%2C3a%2C75y%2C300.34h%2C90t%2Fdata%3D*213m4*211e1*213m2*211si9pTdnw0_o1bippCGwQ39Q*212e0*214m2*213m1*211s0x3957cb00031b8b35%3A0x9dfea6490d8aacd6%3Fsa%3DX%26ved%3D2ahUKEwjfjJSNi4qHAxVp-TgGHR-qDlYQpx96BAgyEAA!5sthe%20moonlit%20cafe%20porbandar%20-%20Google%20Search!15sCgIgAQ&imagekey=!1e2!2si9pTdnw0_o1bippCGwQ39Q&cr=le_a7&hl=en&ved=1t%3A206134&ictx=111"><i class="fa-solid fa-location-dot fa-beat-fade"></i> &nbsp; JMPH+C3, Porbandar , Gujarat 360576</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="box">
-                                <h3><i class="fa-solid fa-share-nodes"></i>&nbsp;Social Media</h3>
-                                <a href="https://www.facebook.com/cafemoonlightlatur/"><i class="fab fa-facebook-f"></i>Facebook</a>
-                                <a href="https://www.instagram.com/__moonlightcafe__/"><i class="fab fa-instagram"></i>Instagram</a>
-                                <a href="the moonlit cafe porbandar youtube"><i class="fab fa-youtube"></i> Youtube</a>
-                                <a href="#"><i class="fab fa-linkedin"></i> Linkedin</a>
-                                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card offer-card">
+                        <span class="badge-offer" style="position:absolute; top:1rem; right:1rem; z-index:2;">Happy Hour</span>
+                        <img src="IMG/off3.png" class="card-img-top" alt="" />
+                        <div class="card-body">
+                            <h5>Happy Hour</h5>
+                            <h4>Join us for Happy Hour from 4 PM to 6 PM every Friday with 50% off on selected drinks.</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="text-center" style="height: 50px; font-size: x-large; background-color: #b2744c;">
-            <small class="center">&copy; The Moonlit Cafe | All Rights Reserved</small>
+    </section>
+
+    <!-- ========================== PRODUCT ========================== -->
+    <section class="product section-padding" id="product">
+        <div class="container">
+            <h1 class="heading">Product <span>Our Best Selections</span></h1>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card"><img src="IMG/arabica coffee.png" alt="" /><div class="card-body"><h3>Arabic Coffee</h3><p>$120 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card"><img src="IMG/Cappuccino coffee.png" alt="" /><div class="card-body"><h3>Cappuccino</h3><p>$250 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card"><img src="IMG/Black Coffee.png" alt="" /><div class="card-body"><h3>Black Coffee</h3><p>$130 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card"><img src="IMG/Decaf caffee.png" alt="" /><div class="card-body"><h3>Decaf Coffee</h3><p>$120 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card" style="height:450px;"><img src="IMG/p1.png" alt="" style="height:280px; object-fit:contain;" /><div class="card-body"><h3>Arabic Coffee</h3><p>$120 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card" style="height:450px;"><img src="IMG/p2.png" alt="" style="height:280px; object-fit:contain;" /><div class="card-body"><h3>Botero Coffee</h3><p>$250 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card" style="height:450px;"><img src="IMG/p3.png" alt="" style="height:280px; object-fit:contain;" /><div class="card-body"><h3>Patch Roast</h3><p>$130 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card" style="height:450px;"><img src="IMG/p4.png" alt="" style="height:280px; object-fit:contain;" /><div class="card-body"><h3>Decaf Coffee</h3><p>$120 <span><i class="fa-solid fa-cart-shopping"></i></span></p></div></div>
+                </div>
+            </div>
         </div>
     </section>
-    <script src="Script.js"></script>
+
+    <!-- ========================== GALLARY ========================== -->
+    <section class="top-cards section-padding" id="gallary">
+        <div class="container">
+            <h1 class="heading">Gallary <span>Top Categories</span></h1>
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100"><div class="card"><img src="IMG/about 1.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="150"><div class="card"><img src="IMG/about.jpg" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200"><div class="card"><img src="IMG/b1.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100"><div class="card"><img src="IMG/b2.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="150"><div class="card"><img src="IMG/b3.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200"><div class="card"><img src="IMG/bl1.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100"><div class="card"><img src="IMG/bl2.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="150"><div class="card"><img src="IMG/bl3.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200"><div class="card"><img src="IMG/bl4.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100"><div class="card"><img src="IMG/bl5.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="150"><div class="card"><img src="IMG/bl6.png" alt="" /></div></div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200"><div class="card"><img src="IMG/1.jpg" alt="" /></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================== REVIEW ========================== -->
+    <section class="review section-padding" id="review">
+        <div class="container">
+            <h1 class="heading">Customer's Review <span>what people says</span></h1>
+            <div class="box-container">
+                <div class="box" data-aos="fade-up" data-aos-delay="100">
+                    <div class="image"><img src="IMG/rev1.jpg" class="user" alt="" /></div>
+                    <h3>Jayesh Odedra</h3>
+                    <h4>Coffee Maker</h4>
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                    <p class="review-text">Amazing coffee and service! The ambiance is perfect for working or relaxing.</p>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="150">
+                    <div class="image"><img src="IMG/rev2.jpg" class="user" alt="" /></div>
+                    <h3>Sachin Yuvraj</h3>
+                    <h4>Coffee Maker</h4>
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p class="review-text">The best coffee in town! The baristas really know their craft. Highly recommended.</p>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="image"><img src="IMG/rev3.jpg" class="user" alt="" /></div>
+                    <h3>Radhika Detroja</h3>
+                    <h4>Coffee Maker</h4>
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i></div>
+                    <p class="review-text">Great place to hang out with friends. The desserts are amazing too!</p>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="100">
+                    <div class="image"><img src="IMG/review-3.png" class="user" alt="" /></div>
+                    <h3>Mihir Rana</h3>
+                    <h4>Satisfied Client</h4>
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p class="review-text">Wonderful experience every time. The staff is so welcoming and friendly.</p>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="150">
+                    <div class="image"><img src="IMG/review-1.png" class="user" alt="" /></div>
+                    <h3>Jaydev Modi</h3>
+                    <h4>Coffee Maker</h4>
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p class="review-text">The Moonlit Cafe is my go-to spot for morning coffee. Love the vibe!</p>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="image"><img src="IMG/review-2.png" class="user" alt="" /></div>
+                    <h3>Mira Parmar</h3>
+                    <h4>Satisfied Client</h4>
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p class="review-text">Beautiful cafe with a cozy atmosphere. The food is delicious too!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================== BLOGS ========================== -->
+    <section class="blog section-padding" id="blogs">
+        <div class="container">
+            <h1 class="heading">Blogs <span>Latest Stories</span></h1>
+            <div class="boxx-container">
+                <div class="boxx" data-aos="fade-up" data-aos-delay="100">
+                    <div class="image"><span class="category-tag">Coffee</span><img src="IMG/bl1.png" alt="" /></div>
+                    <div class="content">
+                        <div class="icons"><a href="#"><i class="fa-regular fa-calendar"></i> 4th March 2024</a><a href="#"><i class="fa-regular fa-heart"></i> 56k</a></div>
+                        <h3>How Should You Feel at a The Moonlit Cafe?</h3>
+                        <p>We have been planning for your visit to one of our coffee shops for 26 years. Learn about our hospitality philosophy.</p>
+                        <a href="#" class="btn">read more</a>
+                    </div>
+                </div>
+                <div class="boxx" data-aos="fade-up" data-aos-delay="150">
+                    <div class="image"><span class="category-tag">Barista</span><img src="IMG/bl2.png" alt="" /></div>
+                    <div class="content">
+                        <div class="icons"><a href="#"><i class="fa-regular fa-calendar"></i> 4th March 2024</a><a href="#"><i class="fa-regular fa-heart"></i> 42k</a></div>
+                        <h3>Pursuing Perfection: Barista Training</h3>
+                        <p>Our baristas are the epitome of our mission to chase quality and serve people. Read about our training program.</p>
+                        <a href="#" class="btn">read more</a>
+                    </div>
+                </div>
+                <div class="boxx" data-aos="fade-up" data-aos-delay="200">
+                    <div class="image"><span class="category-tag">Food</span><img src="IMG/bl3.png" alt="" /></div>
+                    <div class="content">
+                        <div class="icons"><a href="#"><i class="fa-regular fa-calendar"></i> 4th March 2024</a><a href="#"><i class="fa-regular fa-heart"></i> 38k</a></div>
+                        <h3>The Moonlit Cafe is for Foodie's Too!</h3>
+                        <p>The same passion that drives our coffee program also drives our food program. Learn about our food journey.</p>
+                        <a href="#" class="btn">read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================== BOX CRICKET ========================== -->
+    <section id="box" style="padding:4rem 0;">
+        <div class="container">
+            <h1 class="heading">Box Cricket Stadium <span>Need to Moonlit Cafe</span></h1>
+
+            <div id="box-cricket-stadium" data-aos="fade-up" style="background:#f8f8f8; border-radius:20px; padding:4rem 2rem;">
+                <div class="container">
+                    <p>Welcome to The Moon Light Cafe's Box Cricket Stadium! Enjoy a fun and energetic game of cricket in our indoor stadium.</p>
+                    <div class="stadium-gallery">
+                        <img src="IMG/bcs1.png" alt="Box Cricket Stadium 1" />
+                        <img src="IMG/bcs2.png" alt="Box Cricket Stadium 2" />
+                        <img src="IMG/bcs3.png" alt="Box Cricket Stadium 3" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-cricket-section" data-aos="fade-up" data-aos-delay="100">
+                <div class="container">
+                    <p class="text-center mb-4" style="font-size:2.2rem; font-weight:500;">Experience the thrill of cricket at our state-of-the-art box cricket stadium. Perfect for casual matches, tournaments, and events.</p>
+                    <div class="row align-items-center g-4 justify-content-center">
+                        <div class="col-md-6">
+                            <img src="IMG/box1.jpg" class="img-fluid" alt="Box Cricket" style="border-radius:14px; height:300px; width:100%; object-fit:cover; box-shadow:var(--shadow);" />
+                        </div>
+                        <div class="col-md-6">
+                            <h1 style="color:var(--brand); font-size:3rem; text-align:center;"><i class="fa-solid fa-list-check"></i> Facilities</h1>
+                            <ul>
+                                <li><i class="fa-solid fa-check-circle"></i> High-quality turf pitch</li>
+                                <li><i class="fa-solid fa-check-circle"></i> Floodlights for night matches</li>
+                                <li><i class="fa-solid fa-check-circle"></i> Scoreboard</li>
+                                <li><i class="fa-solid fa-check-circle"></i> Seating area</li>
+                                <li><i class="fa-solid fa-check-circle"></i> Refreshment stalls</li>
+                                <li><i class="fa-solid fa-check-circle"></i> Locker rooms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="box-cricket-stadium" style="background:#fff; padding:3rem 0;" data-aos="fade-up">
+                <div class="container">
+                    <h2>Why Choose <span>Our Stadium</span></h2>
+                    <p>Experience the thrill of box cricket at The Moon Light Cafe. Our state-of-the-art stadium offers an exciting and unique way to enjoy your favorite sport.</p>
+                    <div class="stadium-features">
+                        <div class="feature"><div class="icon"><i class="fa-solid fa-building"></i></div><h3>Modern Facilities</h3><p>Floodlights, seating, and a high-quality pitch for the best experience.</p></div>
+                        <div class="feature"><div class="icon"><i class="fa-solid fa-chalkboard-user"></i></div><h3>Professional Coaching</h3><p>Learn from the best in a friendly and supportive environment.</p></div>
+                        <div class="feature"><div class="icon"><i class="fa-solid fa-trophy"></i></div><h3>Events & Tournaments</h3><p>Join regular events and showcase your talent on the field.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <section id="booking-form" data-aos="fade-up" data-aos-delay="100">
+                <h2><i class="fa-regular fa-calendar-check"></i> Book Your Slot</h2>
+                <form id="cricketBookingForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="name"><i class="fa-regular fa-user"></i> Name</label>
+                            <input type="text" id="name" placeholder="Your full name" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email"><i class="fa-regular fa-envelope"></i> Email</label>
+                            <input type="email" id="email" placeholder="Your email" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone"><i class="fa-solid fa-phone"></i> Phone</label>
+                            <input type="tel" id="phone" placeholder="Your phone number" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="players"><i class="fa-solid fa-users"></i> Players</label>
+                            <input type="number" id="players" min="1" max="22" placeholder="Number of players" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date"><i class="fa-regular fa-calendar"></i> Date</label>
+                            <input type="date" id="date" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="time"><i class="fa-regular fa-clock"></i> Time</label>
+                            <input type="time" id="time" required />
+                        </div>
+                    </div>
+                    <button type="submit"><i class="fa-regular fa-circle-check"></i> Book Now</button>
+                </form>
+            </section>
+
+            <section id="confirmation" style="display:none;" data-aos="fade-up">
+                <h2><i class="fa-regular fa-circle-check" style="color:#2ecc71;"></i> Booking Confirmed!</h2>
+                <p>Thank you for booking a slot at our Box Cricket Stadium. Here are your booking details:</p>
+                <div class="detail-row"><span class="label">Name:</span><span class="value" id="confirmName"></span></div>
+                <div class="detail-row"><span class="label">Email:</span><span class="value" id="confirmEmail"></span></div>
+                <div class="detail-row"><span class="label">Phone:</span><span class="value" id="confirmPhone"></span></div>
+                <div class="detail-row"><span class="label">Date:</span><span class="value" id="confirmDate"></span></div>
+                <div class="detail-row"><span class="label">Time:</span><span class="value" id="confirmTime"></span></div>
+                <div class="detail-row"><span class="label">Players:</span><span class="value" id="confirmPlayers"></span></div>
+                <button class="btn" style="margin-top:1.5rem;" onclick="location.reload()"><i class="fa-solid fa-rotate"></i> Book Another</button>
+            </section>
+        </div>
+    </section>
+
+    <!-- ========================== CONTACT ========================== -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <h1 class="heading">CONTACT US <span>Join now</span></h1>
+            <div class="container" data-aos="fade-up">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-7">
+                        <div class="heading6">Join <span>Now</span></div>
+                        <p class="sub-text">We'd love to hear from you! Drop us a message and we'll get back to you soon.</p>
+                        <input class="form-control" type="text" placeholder="Full Name" />
+                        <input class="form-control" type="email" placeholder="Email Address" />
+                        <input class="form-control" type="number" placeholder="Phone Number" />
+                        <button id="contact-btn"><i class="fa-regular fa-paper-plane"></i> Send Message</button>
+                    </div>
+                    <div class="col-md-5" id="col">
+                        <h1><i class="fa-regular fa-address-card"></i> Info</h1>
+                        <p><i class="fa-regular fa-envelope"></i> themoonlit.cafe@gmail.com</p>
+                        <p><i class="fa-solid fa-phone"></i> +91-5846285485</p>
+                        <p><i class="fa-solid fa-phone"></i> +91-7186294385</p>
+                        <p><i class="fa-solid fa-location-dot"></i> Porbandar, Gujarat</p>
+                        <p><i class="fa-regular fa-map"></i> JMPH+C3, Porbandar, Gujarat 360576</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container" data-aos="fade-up" data-aos-delay="100">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3708.714950898935!2d69.67510147527356!3d21.63602848016959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3957cb00031b8b35%3A0x9dfea6490d8aacd6!2sMoonlight%20cafe%26box%20cricket!5e0!3m2!1sen!2sin!4v1719744340554!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- ========================== FOOTER ========================== -->
+    <footer class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3><i class="fa-solid fa-code-branch"></i> Our Branches</h3>
+                <a href="#"><i class="fas fa-arrow-right"></i> India</a>
+                <a href="#"><i class="fas fa-arrow-right"></i> USA</a>
+                <a href="#"><i class="fas fa-arrow-right"></i> France</a>
+                <a href="#"><i class="fas fa-arrow-right"></i> Africa</a>
+                <a href="#"><i class="fas fa-arrow-right"></i> Japan</a>
+            </div>
+            <div class="box">
+                <h3><i class="fa-solid fa-link"></i> Quick Links</h3>
+                <a href="#home"><i class="fas fa-arrow-right"></i> Home</a>
+                <a href="#about"><i class="fas fa-arrow-right"></i> About</a>
+                <a href="#menu"><i class="fas fa-arrow-right"></i> Menu</a>
+                <a href="#product"><i class="fas fa-arrow-right"></i> Product</a>
+                <a href="#gallary"><i class="fas fa-arrow-right"></i> Gallary</a>
+                <a href="#review"><i class="fas fa-arrow-right"></i> Review</a>
+                <a href="#blogs"><i class="fas fa-arrow-right"></i> Blogs</a>
+            </div>
+            <div class="box">
+                <h3><i class="fa-regular fa-address-book"></i> Contact Info</h3>
+                <a href="#"><i class="fa-solid fa-phone"></i> +91-5846285485</a>
+                <a href="#"><i class="fa-solid fa-phone"></i> +91-7186294385</a>
+                <a href="#"><i class="fa-regular fa-envelope"></i> moonlit.cafe@gmail.com</a>
+                <a href="#"><i class="fa-solid fa-location-dot"></i> JMPH+C3, Porbandar, Gujarat 360576</a>
+            </div>
+            <div class="box">
+                <h3><i class="fa-solid fa-share-nodes"></i> Social Media</h3>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-youtube"></i> Youtube</a>
+                <a href="#"><i class="fab fa-linkedin-in"></i> Linkedin</a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+            </div>
+        </div>
+        <div class="text-center">
+            <small>&copy; 2026 <span>The Moonlit Cafe</span> | All Rights Reserved</small>
+        </div>
+    </footer>
+
+    <!-- ========================== BACK TO TOP ========================== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- ========================== SCRIPTS ========================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+    </script>
+
+    <script>
+        // ===== AOS INIT =====
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // ===== HOME IMAGE SLIDER =====
+        const sliderImages = document.querySelectorAll('.image-slider img');
+        const mainImage = document.querySelector('.main-home-image');
+
+        sliderImages.forEach(img => {
+            img.addEventListener('click', function() {
+                sliderImages.forEach(i => i.classList.remove('active-slide'));
+                this.classList.add('active-slide');
+                mainImage.src = this.getAttribute('src');
+            });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 80) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== BACK TO TOP =====
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== BOOKING FORM =====
+        document.getElementById('cricketBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const players = document.getElementById('players').value;
+
+            if (!name || !email || !phone || !date || !time || !players) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            document.getElementById('confirmName').textContent = name;
+            document.getElementById('confirmEmail').textContent = email;
+            document.getElementById('confirmPhone').textContent = phone;
+            document.getElementById('confirmDate').textContent = date;
+            document.getElementById('confirmTime').textContent = time;
+            document.getElementById('confirmPlayers').textContent = players;
+
+            document.getElementById('booking-form').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'block';
+
+            document.getElementById('confirmation').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        // ===== NAVBAR ACTIVE LINK =====
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                const navbarCollapse = document.getElementById('mynavbar');
+                const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                if (bsCollapse) {
+                    bsCollapse.hide();
+                }
+            });
+        });
+
+        // ===== SMOOTH SCROLL FOR NAV LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset -
+                        navHeight - 10;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== LOGIN FORM SUBMIT =====
+        document.querySelector('#loginForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login successful! (Demo)');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
+            if (modal) modal.hide();
+        });
+
+        // ===== CONTACT FORM =====
+        document.getElementById('contact-btn').addEventListener('click', function() {
+            const inputs = document.querySelectorAll('.contact .form-control');
+            let filled = true;
+            inputs.forEach(inp => {
+                if (!inp.value.trim()) filled = false;
+            });
+            if (filled) {
+                alert('Thank you for your message! We will get back to you soon. ☕');
+                inputs.forEach(inp => inp.value = '');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        console.log('☕ The Moonlit Cafe — Where every cup tells a story.');
+    </script>
 </body>
 </html>
